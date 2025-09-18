@@ -148,5 +148,12 @@ Learn more about the power of Turborepo:
     - 5. Added tsconfig.json in both the places, and imported it from @repo/typescript-config/base.json
     - 6. Added @repo/typrscript-congif as a dependency in both ws-server and http-server
     - 7. Added a build, dev and start script to both the projects
-    - 8. Update the repo-config in bith the project
+    - 8. Update the repo-config in both the project
     - 9. Initialize a http server, initiaize a websocket server
+    - 10. Write the signup signin, create room-endpoint
+    - 11. Write the middleware that decode the token and gate the create-room 
+    - 12. Decode the token in websocket server as well. send the token to the websocket server in a query params
+    - 13. Initialize a new db package where you write the schema of the project
+    - 14. Import the db package in http layer and start putting things in the db
+    - 15. Creating DB package and using it in http-backend layer or ws-backend layer
+    - 16. 
