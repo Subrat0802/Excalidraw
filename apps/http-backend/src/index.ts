@@ -1,25 +1,14 @@
 import express from "express";
-import {success, z} from "zod";
 import jwt from "jsonwebtoken";
-import { JWT_SECRET } from "./config";
+import { JWT_SECRET } from "@repo/backend-common/config";
 import { middleware } from "./middleware";
+import {CreateUserSchema, CreateSigninSchema} from "@repo/common/types";
 
 const app = express();
 
-const signupZodValidation = z.object({
-    username: z.string().min(2, "username must be at least 3 characters"),
-    email: z.string().email("Invalid email address"),
-    password: z.string().min(6, "Password must be at least 6 characters")
-}) 
-
-const signinZodValidation = z.object({
-    email: z.string().email("Invalid email address"),
-    password: z.string().min(6, "Password must be at least 6 characters")
-})
-
 app.post("/signup", (req, res) => {
     try{
-        const parseData = signupZodValidation.safeParse(req.body);
+        const parseData = CreateUserSchema.safeParse(req.body);
         if(!parseData.success){
             return res.status(404).json({
                 message:"Zod validation error",
@@ -28,7 +17,9 @@ app.post("/signup", (req, res) => {
             })
         }
         const {username, email, password} = parseData.data;
-        
+        res.json({
+            userId: 123
+        })
 
     }catch(error){
 
@@ -37,7 +28,7 @@ app.post("/signup", (req, res) => {
 
 app.post("/signin", (req, res) => {
     try{
-        const parseData = signinZodValidation.safeParse(req.body);
+        const parseData = CreateSigninSchema.safeParse(req.body);
         if(!parseData.success) {
             return res.status(404).json({
                 message:"Zod validation error",
