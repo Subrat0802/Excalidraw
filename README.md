@@ -139,3 +139,14 @@ Learn more about the power of Turborepo:
 ## Class 
 - npx create-turbo@latest 
 - use pnpm 
+- create http ws folder - initialize tsconfig file
+- import tsconfig from package/package.json/base.json {extends:@repo/typescript-config/base.json} to avoid to duplication 
+    - 1. Initialize an empty turborepo
+    - 2. Deleted the docs app
+    - 3. Added the http-serber- ws-server 
+    - 4. Added package.json in both the places
+    - 5. Added tsconfig.json in both the places, and imported it from @repo/typescript-config/base.json
+    - 6. Added @repo/typrscript-congif as a dependency in both ws-server and http-server
+    - 7. Added a build, dev and start script to both the projects
+    - 8. Update the repo-config in bith the project
+    - 9. Initialize a http server, initiaize a websocket server
