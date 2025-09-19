@@ -157,3 +157,6 @@ Learn more about the power of Turborepo:
     - 14. Import the db package in http layer and start putting things in the db
     - 15. Creating DB package and using it in http-backend layer or ws-backend layer
     - 16. Add a common package where we add the zod schema and the JWT_SECRET
+    - 17. Defining the schema in schema.prisma
+    - 18. complete the HTTP Backend
+    - 19. 

@@ -15,7 +15,7 @@ export const middleware = (req: Request, res: Response, next: NextFunction) => {
                 messsage:"Token is authorized",
                 success:true
             })
-            next();
+next();
         }else{
             res.json({
                 message:"Error while authorize token",
