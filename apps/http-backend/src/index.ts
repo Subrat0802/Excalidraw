@@ -179,4 +179,30 @@ app.post("/room", middleware, async (req, res) => {
   }
 });
 
+app.get("/chats/:roomId", async (req, res) => {
+  const roomId = Number(req.params.roomId);
+  const messages = await prismaClient.chat.findMany({
+    where:{
+      roomId: roomId
+    },
+    orderBy:{
+      id:"desc"
+    },
+    take:50
+  })
+
+  if(!messages){
+    return res.status(403).json({
+      message:"Error while fetting last messages",
+      success:false
+    })
+  }
+
+  res.status(200).json({
+    messages:messages,
+    success:true,
+    message:"Last 50 messages"
+  })
+})
+
 app.listen(3001);
