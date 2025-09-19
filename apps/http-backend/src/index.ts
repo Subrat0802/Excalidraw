@@ -23,7 +23,7 @@ app.post("/signup", async (req, res) => {
 
     const user = await prismaClient.user.create({
       data: {
-        
+
         email: email,
         username: username,
         password: password,
@@ -36,6 +36,8 @@ app.post("/signup", async (req, res) => {
         message:"Error while signup, invalid credentials",
         success:false
       })
+
+      
     }
     res.status(200).json({
       user:user,
