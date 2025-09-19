@@ -1,28 +1,34 @@
 import { NextFunction, Request, Response } from "express";
-import jwt from "jsonwebtoken";
+import jwt, { JwtPayload } from "jsonwebtoken";
 import { JWT_SECRET } from "@repo/backend-common/config";
 
 export const middleware = (req: Request, res: Response, next: NextFunction) => {
   try {
-    const header = req.header("authorization") ?? "";
+    const token = req.header("authorization"); 
 
-    const decode = jwt.verify(header, JWT_SECRET);
-
-    if (decode) {
-      //@ts-ignore. //todo fix it
-      req.userId = decode.id;
-
-
-res.json({
-        messsage: "Token is authorized",
-        success: true,
-      });
-      next();
-    } else {
-      res.json({
-        message: "Error while authorize token",
+    if (!token) {
+      return res.status(401).json({
+        message: "Authorization token missing",
         success: false,
       });
     }
-  } catch (error) {}
+
+    const decoded = jwt.verify(token, JWT_SECRET);
+
+    if (typeof decoded === "object" && "id" in decoded) {
+      (req as any).userId = (decoded as JwtPayload).id;
+      next(); 
+    } else {
+      return res.status(401).json({
+        message: "Invalid token",
+        success: false,
+      });
+    }
+    
+  } catch (error) {
+    return res.status(401).json({
+      message: "Unauthorized: invalid or expired token",
+      success: false,
+    });
+  }
 };

@@ -159,4 +159,6 @@ Learn more about the power of Turborepo:
     - 16. Add a common package where we add the zod schema and the JWT_SECRET
     - 17. Defining the schema in schema.prisma
     - 18. complete the HTTP Backend
-    - 19. 
+    - 19. Wslayer, room management, brodcast messages
+    - 20. HTTP route for GET/cha?room=123
+    - 21. Frontend
