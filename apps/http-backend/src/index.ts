@@ -7,10 +7,19 @@ import { prismaClient } from "@repo/db/client";
 import bcrypt from "bcrypt";
 import cookieParser from "cookie-parser";
 import { success } from "zod";
+import cors from "cors";
 
 const app = express();
+
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true, // if you want cookies/token headers sent
+  })
+);
 app.use(express.json());
 app.use(cookieParser());
+
 
 app.post("/signup", async (req, res) => {
   try {
@@ -203,6 +212,41 @@ app.get("/chats/:roomId", async (req, res) => {
     success:true,
     message:"Last 50 messages"
   })
+})
+
+app.get("/room/:slug", async (req, res) => {
+  try{
+    const slug = req.params.slug;
+    console.log(slug)
+    const roomId = await prismaClient.room.findFirst({
+      where:{
+        slug
+      }
+    })
+    if(!roomId){
+      return res.status(404).json({
+        message:"Error while getting room id",
+        success: false
+      })
+    }
+
+    console.log("roomId", roomId)
+    return res.status(200).json({
+      roomId:roomId,
+      message:"room id",
+      success:true
+    })
+  }catch(error){
+    return res.status(500).json({
+      message:"Server error while getting roomid using slug",
+      success:false,
+      error:error
+    })
+  }
+})
+
+app.get("/test", (req, res) => {
+  res.send("Hello");
 })
 
 app.listen(3001);
